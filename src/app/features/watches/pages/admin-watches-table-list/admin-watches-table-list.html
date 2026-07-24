@@ -1,0 +1,30 @@
+@if (allWatchesResource.hasValue()) {
+  @if (showSuccessMessage()) {
+    <div class="fixed top-0 w-full z-10">
+      <success-text successText="Se ha eliminado el producto" />
+    </div>
+  }
+  <button-add-product [buttonAction]="navigationService.goToAddNewWatch" />
+  @if (allWatchesResource.value().length > 0) {
+    <div class="w-full">
+      <table-products-list-admin
+        [tableHeadings]="tableHeadings()"
+        [products]="allWatchesResource.value()"
+        [productType]="'watches'"
+        [tableButtons]="tableButtons()"
+      />
+    </div>
+  } @else {
+    <div class="w-full flex justify-center animation-fadeIn">
+      <no-records-found />
+    </div>
+  }
+} @else if (allWatchesResource.isLoading()) {
+  <loading-spinner />
+} @else {
+  <div class="flex w-full justify-center">
+    <div class="w-1/3">
+      <error-icon errorText="Error al obtener los productos. Intente nuevamente." />
+    </div>
+  </div>
+}

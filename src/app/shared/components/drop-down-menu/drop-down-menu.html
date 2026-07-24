@@ -1,0 +1,26 @@
+<!-- popovertarget must match the ID of the corresponding popover, and each ID must be unique -->
+<button class="btn sm:hidden" popovertarget="my-megamenu-1">Menu</button>
+
+<div
+  class="megamenu max-sm:megamenu-vertical p-2 border border-base-300"
+  id="my-megamenu-1"
+  popover
+>
+  <span class="megamenu-active"></span>
+
+  @for (menu of dropDownMenus(); track $index; let i = $index) {
+
+    <button [attr.popovertarget]="'a' + i">{{menu.menuTitle}}</button>
+    <div [id]="'a' + i" popover>
+      <ul class="menu">
+
+        @for (item of menu.menuItems; track $index) {
+          <li (click)="optionSelected(menu.menuTitle, item)"><a>{{item | wordCapitalized}}</a></li>
+        }
+
+      </ul>
+    </div>
+  }
+
+
+</div>

@@ -1,0 +1,33 @@
+
+@if (showMessage()) {
+  <div class=" fixed top-0 z-10 w-full">
+    @if (successfulLogin()) {
+      <success-text successText="Inicio de sesion correcto" />
+    }@else {
+      <error-text [errorText]="errorMessage()"  />
+    }
+  </div>
+}
+
+@if (loginRxResource.isLoading()) {
+  <div class="w-full h-screen flex justify-center items-center">
+    <loading-spinner />
+  </div>
+}@else {
+
+  <div class="flex min-h-screen items-center justify-center bg-base-200 px-4 py-10 animation-fadeIn">
+    <div class="w-full max-w-md rounded-3xl bg-base-100 p-8 shadow-2xl sm:p-10">
+
+      <login-header />
+
+      <login-form [formGroup]="loginGroup" [loginAction]="login" />
+
+      <!-- Register -->
+      <div class="mt-8 border-t border-base-300 pt-6 text-center text-sm text-base-content/60">
+        ¿No tienes una cuenta?
+
+        <button class="cursor-pointer font-semibold text-primary hover:underline" (click)="navigationService.goToRegister()"> Crear cuenta </button>
+      </div>
+    </div>
+  </div>
+}

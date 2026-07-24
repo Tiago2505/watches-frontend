@@ -1,0 +1,39 @@
+@if (isLoading()) {
+    <loading-spinner />
+} @else if (hasError()) {
+    <div class="flex w-full justify-center">
+      <div class="w-1/2">
+        <error-icon errorText="Error al cargar los productos" />
+      </div>
+    </div>
+} @else {
+  <filter-section
+    [dropDownMenus]="dropDownMenus()"
+    [isDeleteFiltersDisabled]="isDeleteFiltersBtnDisabled()"
+    (shareFiltersOutput)="filters.set($event)"
+    (shareSearchInputOutput)="searchParam.set($event)"
+    (shareDeleteFilters)="clearFilters()"
+  />
+
+  @if (hasProducts()) {
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-items-center gap-y-5 py-5 animation-fadeIn">
+      @for (watch of displayedWatches(); track watch.id) {
+        <product-card
+          [cardTitle]="watch.name"
+          [cardDescription]="watch.description"
+          [brandProduct]="watch.brand"
+          [priceProduct]="watch.price"
+          [productImages]="watch.images"
+        />
+      }
+    </div>
+
+  } @else {
+
+    <div class="flex justify-center items-center py-20">
+      <span class="text-body text-lg"> No se encontraron productos. </span>
+    </div>
+
+  }
+
+}

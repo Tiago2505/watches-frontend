@@ -1,0 +1,36 @@
+<div
+  class="w-full p-2 rounded-xl"
+  [class.border-2]="manyImages()"
+  [class.border-error]="manyImages()"
+>
+  <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
+    <!-- Imágenes actuales del producto -->
+    @for (image of currentImagesInput(); track $index) {
+      <app-image
+        [image]="image"
+        [wasImageDeleted]="wasImageDeleted(image)"
+        (DeleteBtnWasClicked)="deleteImage(image)"
+        (RestoreBtnWasClicked)="restoreImage(image)"
+      />
+    }
+
+    <!-- Nuevas imágenes seleccionadas -->
+    @for (image of newImages(); track $index) {
+      <app-image
+        [image]="image.url"
+        [wasImageDeleted]="wasImageDeleted(image.url)"
+        [isNewImage]="true"
+        (DeleteBtnWasClicked)="deleteImage(image.url)"
+        (RestoreBtnWasClicked)="restoreImage(image.url)"
+      />
+    }
+
+    @if (!containerFull()) {
+      <input-add-image-grid (files)="addImages($event)" />
+    }
+  </div>
+</div>
+
+@if (manyImages()) {
+  <error-icon errorText="límite máximo permitido es de 4 imágenes" />
+}

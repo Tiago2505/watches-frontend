@@ -1,0 +1,74 @@
+<div class="flex h-full w-full flex-col items-center overflow-hidden rounded-3xl p-3">
+  @if (productImages().length > 0) {
+    <!-- Imagen -->
+    <div
+      class="relative aspect-4/3 w-full max-w-md overflow-hidden rounded-2xl shadow-sm"
+    >
+      <img
+        [src]="productImages()[currentImage()]"
+        class="h-full w-full object-contain transition-all duration-500"
+      />
+    </div>
+
+    <!-- Barra de controles -->
+    @if (productImages().length > 1) {
+      <div class="mt-3 flex items-center justify-center gap-4">
+        <!-- Botón anterior -->
+        <button
+          type="button"
+          class="flex h-9 w-9 items-center justify-center rounded-full border border-base-300 bg-base-100 text-base-content/60 shadow-sm transition-all duration-200 hover:border-primary/30 hover:bg-primary/10 hover:text-primary active:scale-95"
+          (click)="previousImage()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <!-- Contador -->
+        <div
+          class="flex min-w-17.5 items-center justify-center rounded-full border border-base-300 bg-base-100 px-4 py-1.5 shadow-sm"
+        >
+          <span class="text-xs font-bold text-primary">
+            {{ currentImage() + 1 }}
+          </span>
+
+          <span class="mx-1.5 text-xs text-base-content/30"> / </span>
+
+          <span class="text-xs font-medium text-base-content/50">
+            {{ productImages().length }}
+          </span>
+        </div>
+
+        <!-- Botón siguiente -->
+        <button
+          type="button"
+          class="flex h-9 w-9 items-center justify-center rounded-full border border-base-300 bg-base-100 text-base-content/60 shadow-sm transition-all duration-200 hover:border-primary/30 hover:bg-primary/10 hover:text-primary active:scale-95"
+          (click)="nextImage()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    }
+  } @else {
+    <!-- Sin imágenes -->
+    <div class="aspect-4/3 w-full max-w-md">
+      <empty-images />
+    </div>
+  }
+</div>

@@ -1,0 +1,107 @@
+<div
+  class="hidden md:block w-full overflow-x-auto rounded-box border border-base-content/5 bg-base-100"
+>
+  <table class="table">
+    <!-- head -->
+    <thead>
+      <tr class="text-center">
+        @for (title of tableHeadings(); track $index) {
+          <th>{{ title }}</th>
+        }
+        <th colspan="2">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- row 1 -->
+
+      @for (product of products(); track $index) {
+        <tr class="text-center">
+          <th>{{ product.id }}</th>
+          <td class="w-60 h-60">
+            <carousel-images [productImages]="product.images" />
+          </td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.brand }}</td>
+          <td>L. {{ product.price | number }}</td>
+
+          @for (btn of tableButtons(); track $index) {
+            @if (btn.text === 'Delete') {
+              <td>
+                <button
+                  [class]="'btn ' + btn.btnClass"
+                  (click)="btn.action(product.id, product.images)"
+                >
+                  {{ btn.text }}
+                </button>
+              </td>
+            } @else {
+              <td>
+                <button [class]="'btn ' + btn.btnClass" (click)="btn.action(product.id)">
+                  {{ btn.text }}
+                </button>
+              </td>
+            }
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<!-- Móvil -->
+<div class="grid grid-cols-1 gap-4 md:hidden">
+  @for (product of products(); track product.id) {
+    <div class="card border border-base-content/10 bg-base-100 shadow-sm">
+      <!-- Imagen -->
+      <div class="h-56 bg-base-200">
+        <carousel-images [productImages]="product.images" />
+      </div>
+
+      <!-- Información -->
+      <div class="card-body">
+        <h2 class="card-title">
+          {{ product.name }}
+        </h2>
+
+        <div class="space-y-2 text-sm">
+          <p>
+            <span class="font-semibold">ID:</span>
+            {{ product.id }}
+          </p>
+
+          <p>
+            <span class="font-semibold">Marca:</span>
+            {{ product.brand }}
+          </p>
+
+          <p>
+            <span class="font-semibold">Descripción:</span>
+            {{ product.description }}
+          </p>
+
+          <p class="text-lg font-bold">L. {{ product.price | number }}</p>
+        </div>
+
+        <!-- Acciones -->
+        <div class="card-actions mt-3 grid grid-cols-2 gap-2">
+          @for (btn of tableButtons(); track $index) {
+            @if (btn.text === 'Delete') {
+              <button
+                class="btn"
+                [class]="btn.btnClass"
+                (click)="btn.action(product.id, product.images)"
+              >
+                {{ btn.text }}
+              </button>
+            } @else {
+              <button class="btn" [class]="btn.btnClass" (click)="btn.action(product.id)">
+                {{ btn.text }}
+              </button>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

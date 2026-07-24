@@ -1,0 +1,39 @@
+<div class="dropdown dropdown-bottom">
+  <button tabindex="0" class="btn btn-outline gap-2">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-5 w-5"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M3 4h18M6 12h12M10 20h4"
+      />
+    </svg>
+
+    Precio
+
+    @if (this.toggle()) {
+      ↑
+    } @else {
+      ↓
+    }
+  </button>
+
+  <ul
+    tabindex="0"
+    class="dropdown-content menu bg-base-100 rounded-box z-10 mt-2 w-56 p-2 shadow-lg"
+  >
+    <li>
+      <button (click)="handleToggle()">↑ Menor a mayor</button>
+    </li>
+
+    <li>
+      <button (click)="handleToggle()">↓ Mayor a menor</button>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,140 @@
+@if (showMessage()) {
+  <div class="top-0 fixed w-full z-10">
+    @if (successfullyRegistered()) {
+      <success-text successText="¡Registro exitoso! Tu cuenta ha sido creada correctamente." />
+    } @else {
+      <error-text [errorText]="errorMessage()" />
+    }
+  </div>
+}
+
+@if (registerRxResource.isLoading()) {
+  <div class="w-full h-screen flex justify-center items-center">
+    <loading-spinner />
+  </div>
+}
+
+<div class="flex min-h-screen items-center justify-center bg-base-200 px-5 py-2 animation-fadeIn">
+  <div
+    class="grid w-full max-w-5xl overflow-hidden rounded-3xl bg-base-100 shadow-2xl md:grid-cols-2"
+  >
+    <!-- Formulario -->
+    <div class="p-8 md:p-10">
+      <register-header />
+
+      <form class="flex flex-col gap-5" [formGroup]="registerGroup">
+        <!-- Nombre -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-medium"> Nombre completo </span>
+          </label>
+
+          <input
+            type="text"
+            placeholder="Ej: Juan Pérez"
+            class="input input-bordered w-full rounded-xl"
+            formControlName="name"
+            [class.border-error]="formControlHasError('name')"
+          />
+
+          @if (formControlHasError('name')) {
+            <span class="text-xs text-error">{{ getError('name') | wordCapitalized }}</span>
+          }
+        </div>
+
+        <!-- Email -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-medium"> Correo electrónico </span>
+          </label>
+
+          <input
+            type="email"
+            placeholder="correo@email.com"
+            class="input input-bordered w-full rounded-xl"
+            formControlName="email"
+            [class.border-error]="formControlHasError('email')"
+          />
+
+          @if (formControlHasError('email')) {
+            <span class="text-xs text-error">{{ getError('email') | wordCapitalized }}</span>
+          }
+        </div>
+
+        <!-- Phone -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-medium"> Teléfono </span>
+          </label>
+
+          <input
+            type="tel"
+            placeholder="9999-9999"
+            class="input input-bordered w-full rounded-xl"
+            formControlName="phone"
+            [class.border-error]="formControlHasError('phone')"
+          />
+
+          @if (formControlHasError('phone')) {
+            <span class="text-xs text-error">{{ getError('phone') | wordCapitalized }}</span>
+          }
+        </div>
+
+        <!-- Password -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-medium"> Contraseña </span>
+          </label>
+
+          <input
+            type="password"
+            placeholder="********"
+            class="input input-bordered w-full rounded-xl"
+            formControlName="password"
+            [class.border-error]="formControlHasError('password')"
+          />
+
+          @if (formControlHasError('password')) {
+            <span class="text-xs text-error">{{ getError('password') | wordCapitalized }}</span>
+          }
+        </div>
+
+        <label class="flex cursor-pointer items-center gap-2">
+          <input
+            type="checkbox"
+            class="checkbox checkbox-primary checkbox-sm"
+            formControlName="remember"
+
+            formControlName="remember"
+          />
+
+          <span class="text-sm text-base-content/70"> Recordarme </span>
+        </label>
+
+        <button class="btn btn-primary mt-3 rounded-xl" (click)="register()">Crear cuenta</button>
+
+        <!-- Login redirect -->
+        <div class="mt-4 text-center text-sm text-base-content/60">
+          ¿Ya tienes una cuenta?
+
+          <button
+            class="link link-primary ml-1 font-medium"
+            (click)="navigationService.goToLogin()"
+          >
+            Iniciar sesión
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Requisitos contraseña -->
+    <div class="flex flex-col justify-center bg-primary/5 p-8 md:p-10">
+      <password-requirements />
+
+      <!-- Extra info -->
+      <div class="mt-6 rounded-2xl bg-base-100 p-5 text-sm text-base-content/60">
+        <p>🔒 Utiliza una contraseña segura para proteger tu cuenta.</p>
+      </div>
+    </div>
+  </div>
+</div>

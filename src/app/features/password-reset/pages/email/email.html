@@ -1,0 +1,65 @@
+@if (showMessage()) {
+  <div class="fixed top-0 w-full z-10">
+    @if (codeWasSentSuccessfully()) {
+      <success-text successText="¡Código enviado!" />
+    } @else {
+      <error-text [errorText]="errorMessage()" />
+    }
+  </div>
+}
+
+@if (createPasswordResetCodeRxResource.isLoading()) {
+
+  <div class="w-full h-screen flex justify-center items-center">
+    <loading-spinner />
+  </div>
+}
+
+<div class="flex min-h-screen items-center justify-center bg-base-200 px-4 py-10 animation-fadeIn">
+  <div class="w-full max-w-md">
+    <!-- Card -->
+    <div class="rounded-3xl bg-base-100 p-8 shadow-2xl sm:p-10">
+      <email-form-header />
+
+      <!-- Form -->
+      <form class="space-y-5" [formGroup]="createPasswordResetCodeGroup">
+
+        <!-- Email -->
+        <div>
+          <label for="email" class="mb-2 block text-sm font-semibold text-base-content">
+            Correo electrónico
+          </label>
+
+          <label
+            class="input input-bordered flex w-full items-center gap-3"
+            [class.border-error]="formControlHasError('email')"
+          >
+            <email-icon />
+
+            <input
+              id="email"
+              type="email"
+              placeholder="ejemplo@correo.com"
+              class="grow"
+              formControlName="email"
+            />
+          </label>
+
+          @if (formControlHasError('email')) {
+            <span class="text-xs text-error">{{ getError('email') | wordCapitalized }}</span>
+          }
+
+          <p class="mt-2 text-xs text-base-content/50">
+            Utiliza el correo con el que registraste tu cuenta.
+          </p>
+        </div>
+
+        <send-code-button [btnAction]="create" />
+      </form>
+
+      <go-back-button />
+    </div>
+
+    <security-note-email />
+  </div>
+</div>

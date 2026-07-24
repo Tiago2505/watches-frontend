@@ -1,0 +1,80 @@
+<div class="w-full h-auto flex flex-col items-center gap-y-10 py-5 animation-fadeIn">
+  <div class="w-1/2 h-auto">
+    <image-grid
+      [currentImagesInput]="images()"
+      (shareCurrentDeletedImages)="currentDeletedImages.emit($event)"
+      (shareNewFilteredImages)="newImages.emit($event)"
+      (shareCurrentFilteredImages)="currentImages.emit($event)"
+      (shareManyImages)="shareManyImages.emit($event)"
+    />
+  </div>
+
+  <div class="w-full">
+    <form class="max-w-xl mx-auto" [formGroup]="formGroup()">
+      @for (form of formFields(); track $index) {
+        <!-- Campos en columnas -->
+        @if (form.type === 'column') {
+          @for (field of form.fields; track $index) {
+            <div class="relative z-0 w-full mb-5 group">
+              <input
+                [type]="field.type"
+                [id]="field.id"
+                class="block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                [class.border-error]="formControlHasErrors(field.id)"
+                placeholder=" "
+                required
+                [formControlName]="field.id"
+              />
+              <label
+                [for]="field.id"
+                class="absolute text-xm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-left peer-focus:inset-s-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+                >{{ field.text }}</label
+              >
+              @if (formControlHasErrors(field.id)) {
+                <text-error [textError]="getError(field.id)" />
+              }
+            </div>
+          }
+
+          <!-- Campos en filas -->
+        } @else {
+          <div class="grid md:grid-cols-2 md:gap-6">
+            @for (field of form.fields; track $index) {
+              <div class="relative z-0 w-full mb-5 group">
+                <input
+                  [type]="field.type"
+                  [name]="field.id"
+                  [id]="field.id"
+                  class="block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer"
+                  [class.border-error]="formControlHasErrors(field.id)"
+                  placeholder=" "
+                  required
+                  [formControlName]="field.id"
+                />
+                <label
+                  [for]="field.id"
+                  class="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-left peer-focus:inset-s-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+                  >{{ field.text }}</label
+                >
+                @if (formControlHasErrors(field.id)) {
+                  <text-error [textError]="getError(field.id)" />
+                }
+              </div>
+            }
+          </div>
+        }
+      }
+
+      <div class="flex justify-center mt-5">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="disableButton()"
+          (click)="btnAction()()"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

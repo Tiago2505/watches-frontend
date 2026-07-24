@@ -1,0 +1,27 @@
+@if (showMessage()) {
+  <div class="w-full fixed top-0 z-10">
+    @if (productWasCreated()) {
+      <success-text successText="Producto agregado" />
+    } @else {
+      <error-text errorText="Revise la información ingresada" />
+    }
+  </div>
+}
+
+@if (createWatchRxResource.isLoading()) {
+  <loading-spinner />
+} @else if (createWatchRxResource.error() && watchFormData()) {
+  <div class="w-full flex justify-center">
+    <error-icon errorText="No se pudo crear el producto. Intente nuevamente." />
+  </div>
+} @else {
+  <form-design
+    [formGroup]="createWatchGroup"
+    [formFields]="createWatchFields()"
+    [btnAction]="create"
+    [images]="[]"
+    [disableButton]="productWasCreated()"
+    (newImages)="watchImages.set($event)"
+    (shareManyImages)="manyImages.set($event)"
+  />
+}

@@ -1,0 +1,21 @@
+<div
+  class="container mx-auto flex h-full flex-col gap-4 px-5 py-3 md:flex-row md:items-center md:justify-between"
+>
+  <!-- Búsqueda -->
+  <div class="w-full md:w-auto">
+    <search-input class="w-full" (export)="shareSearchInput($event)" />
+  </div>
+
+  <!-- Filtros -->
+  <div class="flex w-full flex-col gap-3 sm:flex-row md:w-auto">
+    <drop-down-menu [dropDownMenus]="dropDownMenus()" (share)="shareFilters($event)" />
+
+    <button
+      class="btn btn-error w-full sm:w-auto"
+      [class.btn-disabled]="isDeleteFiltersDisabled()"
+      (click)="deleteFiltersClicked()"
+    >
+      Eliminar filtros
+    </button>
+  </div>
+</div>

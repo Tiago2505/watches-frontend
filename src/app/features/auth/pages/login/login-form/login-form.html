@@ -1,0 +1,74 @@
+<!-- Form -->
+<form class="flex flex-col gap-5" [formGroup]="formGroup()">
+  <!-- Email -->
+  <label class="form-control">
+    <span class="mb-2 text-sm font-medium"> Correo electrónico </span>
+
+    <input
+      type="email"
+      placeholder="email@example.com"
+      class="input w-full input-bordered rounded-xl"
+      formControlName="email"
+      [class.border-error]="formControlHasError('email')"
+    />
+    @if (formControlHasError('email')) {
+      <span class="text-xs text-error">{{ getError('email') | wordCapitalized }}</span>
+    }
+  </label>
+
+  <!-- Password -->
+  <label class="form-control">
+    <span class="mb-2 text-sm font-medium"> Contraseña </span>
+
+    <div class="relative">
+      <input
+        [type]="showPassword() ? 'text' : 'password'"
+        placeholder="********"
+        class="input input-bordered w-full rounded-xl pr-10"
+        formControlName="password"
+        [class.border-error]="formControlHasError('password')"
+      />
+
+      <button
+        type="button"
+        class="absolute right-3 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-primary"
+        (click)="toggleShowPassword()"
+      >
+        @if (showPassword()) {
+          <eye-icon />
+        }@else {
+          <eye-off-icon />
+        }
+
+      </button>
+    </div>
+    @if (formControlHasError('password')) {
+      <span class="text-xs text-error">{{ getError('password') | wordCapitalized }}</span>
+    }
+  </label>
+
+  <!-- Remember + Forgot -->
+  <div class="flex items-center justify-between">
+    <label class="flex cursor-pointer items-center gap-2">
+      <input
+        type="checkbox"
+        class="checkbox checkbox-primary checkbox-sm"
+        formControlName="remember"
+      />
+
+      <span class="text-sm text-base-content/70"> Recordarme </span>
+    </label>
+
+    <button
+      class="cursor-pointer text-sm font-medium text-primary hover:underline"
+      (click)="navigationService.goToSendPasswordResetCode()"
+    >
+      ¿Olvidaste tu contraseña?
+    </button>
+  </div>
+
+  <!-- Button -->
+  <button class="btn btn-primary mt-2 w-full rounded-xl" (click)="loginAction()()">
+    Iniciar sesión
+  </button>
+</form>

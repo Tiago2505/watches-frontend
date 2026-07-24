@@ -1,0 +1,9 @@
+<div class="flex w-full h-full flex-col gap-y-5">
+  <navbar [selectOptionsList]="productsOptions" (share)="showProduct.set($event)" />
+
+  <div class="w-full h-full">
+    @if (showProduct() === 'Watches') {
+      <all-watches />
+    }
+  </div>
+</div>

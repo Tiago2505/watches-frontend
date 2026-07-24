@@ -1,0 +1,37 @@
+@if (productRxResource.isLoading() || updateRxResource.isLoading()) {
+  <loading-spinner />
+
+}@else if (productRxResource.error()) {
+  <div class="w-full flex justify-center">
+    <error-icon errorText="Error al obtener el producto. Intente nuevamente." />
+  </div>
+}@else if (updateRxResource.error() && watchFormData()) {
+  <div class="w-full flex justify-center">
+    <error-icon errorText="No se ha podido actualizar el producto. Intente nuevamente." />
+  </div>
+}@else {
+
+  @if (showMessage()) {
+    @if(productWasUpdated()){
+      <div class="fixed top-0 w-full z-10">
+        <success-text successText="El producto se ha actualizado" />
+      </div>
+    }@else {
+      <div class="fixed top-0 w-full z-10">
+        <error-text errorText="Revise la información ingresada" />
+      </div>
+    }
+  }
+
+  <form-design
+    [formGroup]="updateForm"
+    [formFields]="formFields()"
+    [btnAction]="onUpdate"
+    [images]="productRxResource.value()!.images"
+    [disableButton]="productWasUpdated()"
+    (currentImages)="currentImages.set($event)"
+    (currentDeletedImages)="currentDeletedImages.set($event)"
+    (newImages)="newImages.set($event)"
+    (shareManyImages)="manyImages.set($event)"
+  />
+}
