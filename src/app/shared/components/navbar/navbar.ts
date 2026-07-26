@@ -1,10 +1,11 @@
 import { Component, input, output } from '@angular/core';
 
 import { SelectOptions } from "../select-options/select-options";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'navbar',
-  imports: [SelectOptions],
+  imports: [SelectOptions, RouterLink],
   templateUrl: './navbar.html',
 })
 export class Navbar {

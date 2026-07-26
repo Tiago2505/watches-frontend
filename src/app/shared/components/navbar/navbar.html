@@ -1,13 +1,18 @@
-<div class="navbar bg-base-100 shadow-sm">
-
-  <div class="navbar-start">
-    <select-options [options]="selectOptionsList()" (share)="shareOptionProducts($event)"/>
+<div class="navbar flex-nowrap bg-base-100 shadow-sm">
+  <!-- Select -->
+  <div class="navbar-start min-w-0 flex-1">
+    <select-options
+      class="min-w-0"
+      [options]="selectOptionsList()"
+      (share)="shareOptionProducts($event)"
+    />
   </div>
 
-  <div class="navbar-center">
-    <a class="btn btn-ghost text-xl">Blessing</a>
+  <!-- Logo / Nombre -->
+  <div class="navbar-center shrink-0">
+    <a routerLink="/" class="btn btn-ghost px-2 text-lg font-bold sm:px-4 sm:text-xl"> Blessing </a>
   </div>
 
-  <div class="navbar-end"></div>
-
+  <!-- Espacio derecho -->
+  <div class="navbar-end min-w-0 flex-1"></div>
 </div>
