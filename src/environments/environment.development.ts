@@ -1,4 +1,4 @@
 export const environment = {
-  BASE_URL: 'https://watches-backend-he6y.onrender.com/api',
+  BASE_URL: 'https://api.dcprograming.com/api',
 };
 
